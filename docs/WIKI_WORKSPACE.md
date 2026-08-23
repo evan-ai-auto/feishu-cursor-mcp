@@ -35,8 +35,8 @@ https://<tenant>.feishu.cn/wiki/FjyXw7T3riE9kOk8fwVctDIunAd
 编辑 `~/.feishu-mcp/config.env`：
 
 ```env
-FEISHU_WIKI_SPACE_ID=7444902690959736833
-FEISHU_WIKI_ROOT_NODE_TOKEN=FjyXw7T3riE9kOk8fwVctDIunAd
+FEISHU_WIKI_SPACE_ID=744490269095973xxxx
+FEISHU_WIKI_ROOT_NODE_TOKEN=FjyXw7T3riE9kOk8fwVctDIxxxx
 FEISHU_WIKI_ROOT_TITLE=文档助手专用
 ```
 
@@ -70,4 +70,4 @@ python scripts/feishu/smoke_test.py
 2. 配置 `FEISHU_DEFAULT_FOLDER_TOKEN`
 3. MCP 使用 `folderToken` 而非 `wikiContext`
 
-QuantMind 团队当前推荐 **Wiki 协作区** 方案。
+当前推荐 **Wiki 协作区** 方案。
