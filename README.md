@@ -2,20 +2,20 @@
 
 在 Cursor 中通过 [Feishu-MCP](https://github.com/cso1z/Feishu-MCP) 操作飞书文档（创建、编辑、Wiki 目录树），支持 **tenant 应用身份** + **自动协作者授权**。
 
-本仓库为**独立安装包**，可发布到私有 Git，在任意电脑上 clone 后链接到任意 Cursor 项目。
+本仓库为**独立安装包**，在任意电脑上 clone 后链接到任意 Cursor 项目。
 
 ## 特点
 
 - **配置统一**：凭证与 Wiki 默认值集中在 `~/.feishu-mcp/config.env`（每台机器一份）
 - **项目解耦**：`link-project` 将 MCP 接入任意项目，无需复制凭证进业务仓库
-- **Wiki 目录树**：支持飞书「我的文档库」父子文档结构（本次实践已验证）
+- **Wiki 目录树**：支持飞书「我的文档库」父子文档结构
 - **协作者脚本**：应用创建文档后自动给本人 `full_access`
 
 ## 快速开始
 
 ```powershell
-# 1. clone 本仓库（私有 Git）
-git clone <your-private-repo-url> ~/tools/feishu-cursor-mcp
+# 1. clone 本仓库
+git clone https://github.com/evan-ai-auto/feishu-cursor-mcp.git ~/tools/feishu-cursor-mcp
 cd ~/tools/feishu-cursor-mcp
 
 # 2. 初始化本机配置（仅首次）
@@ -81,10 +81,6 @@ python scripts/feishu/resolve_feishu_open_id.py
 # 冒烟测试
 python scripts/feishu/smoke_test.py
 ```
-
-## 发布到私有 Git
-
-见 [docs/PUBLISH.md](docs/PUBLISH.md)。
 
 ## 参考
 
