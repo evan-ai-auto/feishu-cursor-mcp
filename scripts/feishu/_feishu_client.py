@@ -47,12 +47,22 @@ def find_project_root() -> Path:
     return Path.cwd()
 
 
+def _read_config_text(env_path: Path) -> str:
+    """Read config file; tolerate UTF-8 BOM and legacy Windows encodings."""
+    for encoding in ("utf-8-sig", "utf-8", "gbk"):
+        try:
+            return env_path.read_text(encoding=encoding)
+        except UnicodeDecodeError:
+            continue
+    return env_path.read_text(encoding="utf-8", errors="replace")
+
+
 def load_dotenv(path: Path | None = None) -> dict[str, str]:
     env_path = path or resolve_config_path()
     values: dict[str, str] = {}
     if not env_path or not env_path.exists():
         return values
-    for raw in env_path.read_text(encoding="utf-8").splitlines():
+    for raw in _read_config_text(env_path).splitlines():
         line = raw.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue

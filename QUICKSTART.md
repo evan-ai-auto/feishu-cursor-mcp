@@ -5,12 +5,20 @@
 ## 新电脑 5 步
 
 ```bash
-git clone <private-repo> ~/tools/feishu-cursor-mcp && cd ~/tools/feishu-cursor-mcp
+git clone https://github.com/evan-ai-auto/feishu-cursor-mcp.git ~/tools/feishu-cursor-mcp && cd ~/tools/feishu-cursor-mcp
 bash scripts/install.sh          # Windows: install.ps1
-# 编辑 ~/.feishu-mcp/config.env
+# 编辑 ~/.feishu-mcp/config.env（UTF-8 保存）
 bash scripts/verify.sh
 bash scripts/link-project.sh /path/to/your-cursor-project
 # 重启 Cursor
+```
+
+## 沙箱验证（不影响现有项目）
+
+见 [docs/VERIFY_SANDBOX.md](docs/VERIFY_SANDBOX.md)，或：
+
+```powershell
+powershell -File scripts/verify-sandbox.ps1 -ConfigPath E:\sandbox\feishu-mcp-private\config.env
 ```
 
 ## 冒烟话术（粘贴到 Cursor 对话）

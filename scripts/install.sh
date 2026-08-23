@@ -28,7 +28,7 @@ chmod +x "$KIT_ROOT/scripts/verify.sh" 2>/dev/null || true
 
 echo ""
 echo "Next:"
-echo "  1. Edit $CONFIG_FILE"
+echo "  1. Edit $CONFIG_FILE (save as UTF-8 if using Chinese)"
 echo "  2. Import templates/feishu-tenant-scopes.json in Feishu console"
 echo "  3. bash scripts/verify.sh"
 echo "  4. bash scripts/link-project.sh /path/to/your-project"

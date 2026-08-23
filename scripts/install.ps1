@@ -18,9 +18,11 @@ foreach ($cmd in @("node", "npx", "python")) {
 New-Item -ItemType Directory -Force -Path $ConfigDir | Out-Null
 
 if (-not (Test-Path $ConfigFile)) {
-    Copy-Item $Example $ConfigFile
+    $example = Get-Content $Example -Raw -Encoding UTF8
+    [System.IO.File]::WriteAllText($ConfigFile, $example, [System.Text.UTF8Encoding]::new($false))
     Write-Host "Created $ConfigFile" -ForegroundColor Green
     Write-Host "Edit it with your Feishu app credentials and wiki settings."
+    Write-Host "Tip: save as UTF-8 (not GBK) if config contains Chinese." -ForegroundColor Yellow
 } else {
     Write-Host "Keep existing $ConfigFile"
 }

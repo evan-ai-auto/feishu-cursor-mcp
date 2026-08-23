@@ -69,7 +69,13 @@ python scripts/feishu/resolve_feishu_open_id.py
 
 ```powershell
 powershell -File scripts/verify.ps1
-# macOS: bash scripts/verify.sh
+# 或指定配置：verify.ps1 -ConfigPath E:\path\to\config.env
+```
+
+```bash
+# macOS
+bash scripts/verify.sh
+# 或：bash scripts/verify.sh /path/to/config.env
 ```
 
 期望：`tenant_access_token ok`，`smoke_test` 中 `wiki_list: ok`。

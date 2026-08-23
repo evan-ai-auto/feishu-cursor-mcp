@@ -10,7 +10,8 @@
 | 搜索不到协作根目录 | 用了错误的 space_id | 用 `get_feishu_document_info` 获取真实 `space_id` |
 | 能读不能建子文档 | 应用仅 edit | 分享权限升为「可管理」 |
 | grant 失败 | 未配置协作者 | 设置 `FEISHU_COLLABORATOR_OPEN_ID` |
-| 手机号查不到 OpenID | 缺少通讯录权限 | 确认 `contact:user.id:readonly` 已开通 |
+| `UnicodeDecodeError` 读 config | Windows GBK 编码 | 用 UTF-8 重写 config.env，见 [CONFIG.md](CONFIG.md) |
+| 沙箱验证不想动现有项目 | — | 用 [VERIFY_SANDBOX.md](VERIFY_SANDBOX.md) + `verify-sandbox.ps1` |
 | mcp.json 路径错误 | 换了 kit 安装位置 | 重新 `link-project` |
 
 ## 诊断命令

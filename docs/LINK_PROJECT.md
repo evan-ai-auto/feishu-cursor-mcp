@@ -9,6 +9,11 @@
 ```powershell
 cd ~/tools/feishu-cursor-mcp
 powershell -File scripts/link-project.ps1 -ProjectPath E:\work\my-app
+
+# 使用独立配置文件（沙箱 / 多配置场景）
+powershell -File scripts/link-project.ps1 `
+  -ProjectPath E:\work\my-app `
+  -ConfigPath E:\sandbox\feishu-mcp-private\config.env
 ```
 
 **macOS / Linux**
@@ -16,6 +21,9 @@ powershell -File scripts/link-project.ps1 -ProjectPath E:\work\my-app
 ```bash
 cd ~/tools/feishu-cursor-mcp
 bash scripts/link-project.sh ~/work/my-app
+
+# 独立配置文件
+bash scripts/link-project.sh ~/work/my-app ~/sandbox/feishu-mcp-private/config.env
 ```
 
 ## 脚本会做什么
@@ -27,7 +35,26 @@ bash scripts/link-project.sh ~/work/my-app
 | 复制 Python 脚本 | `<project>/scripts/feishu/*.py` |
 | 写入链接元数据 | `<project>/.feishu-mcp.json` |
 
-MCP 启动器指向 kit 目录中的 `scripts/feishu-mcp-stdio.ps1`，并读取 `~/.feishu-mcp/config.env`。
+MCP 启动器指向 kit 目录中的启动脚本。
+
+- 未指定 `-ConfigPath` 时：读取 `~/.feishu-mcp/config.env`
+- 指定 `-ConfigPath` 时：在 `mcp.json` 写入 `env.FEISHU_MCP_CONFIG`，Cursor 启动 MCP 时使用该文件（适合沙箱验证）
+
+```json
+{
+  "mcpServers": {
+    "feishu-mcp": {
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".../feishu-mcp-stdio.ps1"],
+      "env": {
+        "FEISHU_MCP_CONFIG": "E:/sandbox/feishu-mcp-private/config.env"
+      }
+    }
+  }
+}
+```
+
+沙箱验证见 [VERIFY_SANDBOX.md](VERIFY_SANDBOX.md)。
 
 ## 多项目使用
 

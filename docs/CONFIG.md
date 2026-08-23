@@ -64,7 +64,17 @@ MCP 使用示例：
 ## 安全
 
 - **切勿**将 `config.env` 提交到 Git
+- **Windows**：请用 UTF-8 保存配置文件（见下方说明）
 - 团队共享凭证时通过加密渠道传递，或每人只改 `FEISHU_COLLABORATOR_*`
+
+## Windows 编码（重要）
+
+编辑 `config.env` 时请保存为 **UTF-8**（推荐无 BOM）：
+
+- 使用 VS Code / Notepad++「另存为 UTF-8」
+- **不要**用 PowerShell `Add-Content` 追加中文行（可能变成 GBK，导致 Python 读取失败）
+- `install.ps1` 创建模板时已使用 UTF-8 写入
+- 脚本 `_feishu_client.py` 会尝试 `utf-8-sig` / `gbk` 回退，但仍建议统一 UTF-8
 
 ## 示例（占位符，请替换）
 

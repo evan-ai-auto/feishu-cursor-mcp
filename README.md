@@ -26,6 +26,7 @@ powershell -ExecutionPolicy Bypass -File scripts/install.ps1
 
 # 4. 验证
 powershell -File scripts/verify.ps1
+# 或指定配置文件：verify.ps1 -ConfigPath E:\path\to\config.env
 
 # 5. 链接到你的 Cursor 项目
 powershell -File scripts/link-project.ps1 -ProjectPath E:\path\to\your-project
@@ -35,6 +36,7 @@ powershell -File scripts/link-project.ps1 -ProjectPath E:\path\to\your-project
 
 详细步骤：[docs/INSTALL.md](docs/INSTALL.md)  
 链接其他项目：[docs/LINK_PROJECT.md](docs/LINK_PROJECT.md)  
+**沙箱验证（不影响现有环境）**：[docs/VERIFY_SANDBOX.md](docs/VERIFY_SANDBOX.md)  
 团队分发：[docs/TEAM.md](docs/TEAM.md)
 
 ## 目录结构

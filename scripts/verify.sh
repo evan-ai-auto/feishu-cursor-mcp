@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
+# Verify feishu-cursor-mcp setup. Honors FEISHU_MCP_CONFIG or first arg.
 set -euo pipefail
 
 KIT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-CONFIG_FILE="$HOME/.feishu-mcp/config.env"
 PY="$KIT_ROOT/scripts/feishu"
+CONFIG_FILE="${1:-${FEISHU_MCP_CONFIG:-$HOME/.feishu-mcp/config.env}}"
 
-[[ -f "$CONFIG_FILE" ]] || { echo "Missing $CONFIG_FILE — run scripts/install.sh"; exit 1; }
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  echo "Missing config: $CONFIG_FILE"
+  echo "Run scripts/install.sh or: bash scripts/verify.sh /path/to/config.env"
+  exit 1
+fi
+
+export FEISHU_MCP_CONFIG="$CONFIG_FILE"
 
 set -a
 # shellcheck disable=SC1090
@@ -18,7 +25,7 @@ echo "Config: $CONFIG_FILE"
 npx -y feishu-mcp@latest --version | tail -n 1
 
 python3 - <<PY
-import json, urllib.request, os
+import json, os, urllib.request
 body = json.dumps({"app_id": os.environ["FEISHU_APP_ID"], "app_secret": os.environ["FEISHU_APP_SECRET"]}).encode()
 req = urllib.request.Request(
     "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal",
@@ -30,10 +37,10 @@ if data.get("code") != 0:
 print(f"tenant_access_token ok, expire={data.get('expire')}s")
 PY
 
-if [[ -n "${FEISHU_COLLABORATOR_MOBILE:-}" || -n "${FEISHU_COLLABORATOR_EMAIL:-}" ]]; then
-  python3 "$PY/resolve_feishu_open_id.py"
-elif [[ -n "${FEISHU_COLLABORATOR_OPEN_ID:-}" ]]; then
+if [[ -n "${FEISHU_COLLABORATOR_OPEN_ID:-}" ]]; then
   echo "FEISHU_COLLABORATOR_OPEN_ID is set"
+elif [[ -n "${FEISHU_COLLABORATOR_MOBILE:-}" || -n "${FEISHU_COLLABORATOR_EMAIL:-}" ]]; then
+  python3 "$PY/resolve_feishu_open_id.py"
 else
   echo "WARN: set FEISHU_COLLABORATOR_OPEN_ID for auto grant"
 fi
