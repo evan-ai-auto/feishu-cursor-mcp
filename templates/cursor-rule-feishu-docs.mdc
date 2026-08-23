@@ -1,0 +1,55 @@
+---
+description: Feishu MCP tenant mode — wiki workspace and auto collaborator grant
+globs:
+alwaysApply: false
+---
+
+# Feishu MCP (feishu-cursor-mcp)
+
+Config file (unified, user-level): `~/.feishu-mcp/config.env`
+
+## Default Wiki workspace
+
+When creating or listing documents in the user's「我的文档库」tree, use **wiki mode** with values from config:
+
+- `FEISHU_WIKI_SPACE_ID` — wiki space id
+- `FEISHU_WIKI_ROOT_NODE_TOKEN` — parent node (directory root)
+- `FEISHU_WIKI_ROOT_TITLE` — human-readable name (e.g. 文档助手专用)
+
+Example MCP `wikiContext`:
+
+```json
+{
+  "spaceId": "<FEISHU_WIKI_SPACE_ID>",
+  "parentNodeToken": "<FEISHU_WIKI_ROOT_NODE_TOKEN>"
+}
+```
+
+Notes:
+- In Feishu「我的文档库」, folders are **parent documents with child documents** — not drive folders.
+- List children: `get_feishu_folder_files` + `wikiContext`.
+- Create child doc: `create_feishu_document` + same `wikiContext`.
+- Edit content: use child node's `obj_token` from create/list response.
+
+## After create (tenant mode)
+
+Documents are owned by the app. After `create_feishu_document` succeeds, run:
+
+```bash
+python scripts/feishu/grant_document_collaborator.py --doc-token <obj_token>
+```
+
+Requires in `~/.feishu-mcp/config.env`:
+- `FEISHU_AUTO_GRANT_COLLABORATOR=true`
+- `FEISHU_COLLABORATOR_OPEN_ID` (or mobile/email)
+
+Default permission: `full_access`.
+
+## Security
+
+- Never write App Secret, tokens, OpenID, mobile, or email into Feishu document body.
+- Test docs use neutral titles only.
+
+## Kit docs
+
+Full guide: see `feishu-cursor-mcp` repo `README.md` and `docs/`.

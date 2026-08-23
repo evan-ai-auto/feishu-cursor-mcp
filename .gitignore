@@ -1,0 +1,12 @@
+# Local secrets — never commit
+config.env
+*.local.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node cache (npx downloads feishu-mcp on demand)
+node_modules/
